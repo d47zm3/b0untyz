@@ -27,6 +27,17 @@ function decho_green
   fi
 }
 
+function echo_green
+{
+  string=${1}
+  if [[ ${color_output} -eq 1 ]]
+  then
+    echo -e "${green}${string}${no_color}"
+  else
+    echo "${string}"
+  fi
+}
+
 function decho_logo
 {
   string=${1}
@@ -70,7 +81,7 @@ function process_subdomains
     then
         continue
     fi
-    echo -e "${green}[subdomain]:${no_color} ${line}"
+    echo_green "[subdomain]: ${line}"
   done
 
   > workspace/${domain}/subdomains.ip.list
@@ -100,8 +111,8 @@ function process_subdomains
     then
       ptr="none"
     fi
-    echo -e "ip address ${green}${line}${no_color} (ptr record: ${ptr}) ${domains}"
-    echo -e "${green}[whois info]${no_color}"
+    echo_green "ip address ${line} (ptr record: ${ptr}) ${domains}"
+    echo_green "[whois info]"
     whois ${line} | egrep -i "inetnum|netname|country|org-name|orgname|netrange" | uniq
     echo  "${line},${ptr},${domains}" >> workspace/${domain}/subdomains.by.ip.process
 
