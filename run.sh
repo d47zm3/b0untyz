@@ -27,6 +27,9 @@ while getopts "c:" opt; do
   esac
 done
 
+decho "[checking prerequisites]"
+prerequisites
+
 decho "[preparing workspace]"
 prepare_workspace
 

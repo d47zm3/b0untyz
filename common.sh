@@ -64,6 +64,22 @@ function help_usage
           "
 }
 
+function prerequisites
+{
+  if ! which -s whois
+  then
+    decho "[error] whois util not found!"
+    exit 1
+  fi
+
+  if ! which -s docker
+  then
+    decho "[error] docker util not found!"
+    exit 1
+  fi
+
+}
+
 function prepare_workspace
 {
   mkdir -p workspace/${domain}/{amass,sublist3r,gobuster}
