@@ -66,13 +66,13 @@ function help_usage
 
 function prerequisites
 {
-  if ! which -s whois
+  if ! which whois &> /dev/null
   then
     decho "[error] whois util not found!"
     exit 1
   fi
 
-  if ! which -s docker
+  if ! which docker &> /dev/null
   then
     decho "[error] docker util not found!"
     exit 1
