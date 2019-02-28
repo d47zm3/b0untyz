@@ -33,13 +33,13 @@ prepare_workspace
 decho "[domain enumeration]"
 
 decho_green "[*] running amass..."
-timeout 10m docker run -i --rm -v $( pwd )/workspace/${domain}/amass/:/output/ security-tools:amass --passive -d ${domain} -o /output/result.txt > $( pwd )/workspace/${domain}/amass/run.log
+timeout 30m docker run -i --rm -v $( pwd )/workspace/${domain}/amass/:/output/ security-tools:amass --passive -d ${domain} -o /output/result.txt > $( pwd )/workspace/${domain}/amass/run.log
 
 decho_green "[*] running sublist3r..."
-timeout 10m docker run -i --rm -v $( pwd )/workspace/${domain}/sublist3r/:/output/ security-tools:sublist3r python /opt/sublist3r/sublist3r.py -d ${domain} -o /output/result.txt  > $( pwd )/workspace/${domain}/sublist3r/run.log
+timeout 30m docker run -i --rm -v $( pwd )/workspace/${domain}/sublist3r/:/output/ security-tools:sublist3r python /opt/sublist3r/sublist3r.py -d ${domain} -o /output/result.txt  > $( pwd )/workspace/${domain}/sublist3r/run.log
 
 decho_green "[*] running gobuster (brute force)... may take a while (10 minutes!)"
-timeout 20m docker run -i --rm -v $( pwd)/dictionaries:/dic -v $( pwd )/workspace/${domain}/gobuster/:/output/ security-tools:gobuster gobuster -m dns -u ${domain} -t 25 -fw -w /dic/subdomains.txt -o /output/result.txt.tmp > $( pwd )/workspace/${domain}/gobuster/run.log
+timeout 60m docker run -i --rm -v $( pwd)/dictionaries:/dic -v $( pwd )/workspace/${domain}/gobuster/:/output/ security-tools:gobuster gobuster -m dns -u ${domain} -t 25 -fw -w /dic/subdomains.txt -o /output/result.txt.tmp > $( pwd )/workspace/${domain}/gobuster/run.log
 
 decho "[processing results...]"
 process_subdomains ${domain}
